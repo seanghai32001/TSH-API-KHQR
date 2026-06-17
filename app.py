@@ -2,9 +2,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import Optional
 import requests
-import uvicorn
 from mangum import Mangum
-handler = Mangum(app)
 
 app = FastAPI(
     title="Bakong Transaction Checker",
@@ -17,9 +15,8 @@ app = FastAPI(
 # ==================================
 
 BAKONG_API_URL = "https://bakong.apsara.fun/v1/check_transaction_by_md5"
-
-# Default Token (optional)
 DEFAULT_TOKEN = ""
+
 
 # ==================================
 # MODELS
@@ -77,7 +74,7 @@ def check_payment(data: MD5Request):
             BAKONG_API_URL,
             json=payload,
             headers=headers,
-            timeout=30
+            timeout=15
         )
 
         result = response.json()
@@ -91,19 +88,19 @@ def check_payment(data: MD5Request):
     except requests.exceptions.Timeout:
         raise HTTPException(
             status_code=408,
-            detail="Request Timeout"
+            detail=str("FUCK YOU")
         )
 
     except requests.exceptions.ConnectionError:
         raise HTTPException(
             status_code=500,
-            detail="Connection Error"
+            detail=str("FUCK YOU")
         )
 
     except Exception as e:
         raise HTTPException(
             status_code=500,
-            detail=str("fuck you")
+            detail=str("FUCK YOU")
         )
 
 
@@ -128,7 +125,7 @@ def check_payment_by_url(token: str, md5: str):
             BAKONG_API_URL,
             json=payload,
             headers=headers,
-            timeout=30
+            timeout=15
         )
 
         return response.json()
@@ -136,19 +133,19 @@ def check_payment_by_url(token: str, md5: str):
     except requests.exceptions.Timeout:
         raise HTTPException(
             status_code=408,
-            detail="Request Timeout"
+            detail=str("FUCK YOU")
         )
 
     except requests.exceptions.ConnectionError:
         raise HTTPException(
             status_code=500,
-            detail="Connection Error"
+            detail=str("FUCK YOU")
         )
 
     except Exception as e:
         raise HTTPException(
             status_code=500,
-            detail=str("fuck you")
+            detail=str("FUCK YOU")
         )
 
 
@@ -164,6 +161,7 @@ def health():
 
 
 # ==================================
-# RUN
+# VERCEL ENTRY POINT
 # ==================================
 
+handler = Mangum(app)
