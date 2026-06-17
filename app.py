@@ -3,6 +3,8 @@ from pydantic import BaseModel
 from typing import Optional
 import requests
 import uvicorn
+from mangum import Mangum
+handler = Mangum(app)
 
 app = FastAPI(
     title="Bakong Transaction Checker",
