@@ -17,10 +17,10 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=["*"],         # <--- ដាក់សញ្ញា "*" ដើម្បីអនុញ្ញាតទាំងអស់ (Any domain/port)
+    allow_credentials=False,     # <--- ត្រូវតែដាក់ False នៅពេលប្រើ allow_origins=["*"]
+    allow_methods=["*"],         # អនុញ្ញាតគ្រប់ Methods (GET, POST, PUT...)
+    allow_headers=["*"],         # អនុញ្ញាតគ្រប់ Headers
 )
 
 # ==================================
